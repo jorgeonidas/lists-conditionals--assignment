@@ -5,37 +5,36 @@ import CharComponent from './CharComponent/CharComponent';
 class App extends Component {
 
   state = { 
-    text : '', 
-    charactersList : ['']  
+    text : 'Text To modify', 
   };
 
   inputTextChangedHandler =(event)=>{
-    const text = event.target.value
-    this.setState({text: text});
-    this.setState({charactersList: text.split('')});
+    this.setState({text: event.target.value});
   };
 
   removeCharacterHandler = (index)=> {
-    const characterListCopy = [...this.state.charactersList];
+    const characterListCopy = this.state.text.split('');
     characterListCopy.splice(index, 1);
-    this.setState({charactersList: characterListCopy})
     this.setState({text: characterListCopy.join('')});
   }
 
   render() {
 
     let characters = null;
-    if(this.state.text.length > 0){
+
       characters=(
         <div>
           {
-            this.state.charactersList.map((character, index)=>{
-              return <CharComponent character={character} clicked={()=>this.removeCharacterHandler(index)} key={index}/>
+            this.state.text.split('').map((character, index)=>{
+              return <CharComponent 
+              character={character} 
+              clicked={()=>this.removeCharacterHandler(index)} 
+              key={index}/>
             })
           }
         </div>
       )
-    }
+
 
     return (
       <div className="App">
